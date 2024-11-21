@@ -1,11 +1,13 @@
 from flask import Flask
+from flask_restx import Api
+
+from controller.TempController import Friend
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 
-@app.route('/')
-def hello_world():
-    print("hello world")
-    return 'Hello, World!'
+api = Api(app)
+api.add_namespace(Friend, "/friends")
 
 if __name__ == '__main__':
     app.run()
