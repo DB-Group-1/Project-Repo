@@ -1,0 +1,3 @@
+
+class ContentRepository:
+    pass
