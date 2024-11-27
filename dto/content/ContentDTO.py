@@ -7,7 +7,7 @@ class ContentDTO:
             videoId: int,
             name: str,
             image: str,
-            type: str,
+            category: str,
             description: str,
             publisher: str,
             episode: int,
@@ -15,17 +15,29 @@ class ContentDTO:
         self.videoId = videoId
         self.name = name
         self.image = image
-        self.type = type
+        self.category = category
         self.description = description
         self.publisher = publisher
         self.episode = episode
+
+    @staticmethod
+    def fromDict(obj: dict):
+        return ContentDTO(
+            obj['videoId'],
+            obj['name'],
+            obj['image'],
+            obj['type'],
+            obj['description'],
+            obj['publisher'],
+            obj['episode'],
+        )
 
     def toJson(self) -> bytes:
         obj = {
             'videoId': self.videoId,
             'name': self.name,
             'image': self.image,
-            'type': self.type,
+            'type': self.category,
             'description': self.description,
             'publisher': self.publisher,
             'episode': self.episode,

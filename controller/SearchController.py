@@ -5,9 +5,6 @@ from service.SearchService import SearchService
 
 SearchNamespace = Namespace('search', description='Search operations')
 
-RecommendSearchNamespace = Namespace('recommend', description='Recommend search operations')
-SearchNamespace.add_resource(RecommendSearchNamespace, '/recommend')
-
 @SearchNamespace.route('/actor', methods=['POST'])
 class SearchActorController(Resource):
     def post(self):
@@ -27,14 +24,14 @@ class SearchPopularController(Resource):
     def post(self):
         return SearchService().getPopularContents()
 
-@RecommendSearchNamespace.route('/like', methods=['GET'])
+@SearchNamespace.route('/recommend/like', methods=['GET'])
 class RecommendLikeController(Resource):
     def get(self):
         request_json = request.get_json()
         userId = request_json['uid']
         return SearchService().recommendByLike(userId)
 
-@RecommendSearchNamespace.route('/watch', methods=['GET'])
+@SearchNamespace.route('/recommend/watch', methods=['GET'])
 class RecommendWatchController(Resource):
     def get(self):
         request_json = request.get_json()

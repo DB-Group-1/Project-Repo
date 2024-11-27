@@ -1,10 +1,14 @@
-from flask import Flask
-from flask_restx import Api
+import json
 
+from flask import Flask, Response
+from flask_restx import Api, Resource
+
+from common.config.Config import *
 from controller.ContentConroller import ContentNamespace
 from controller.GenreController import GenreNamespace
 from controller.SearchController import SearchNamespace
 from controller.UserController import UserNamespace
+from utils.DB import DB
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
