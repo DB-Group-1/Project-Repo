@@ -21,8 +21,8 @@ class SearchTitleController(Resource):
 
 @SearchNamespace.route('/popular', methods=['GET'])
 class SearchPopularController(Resource):
-    def post(self):
-        return SearchService().getPopularContents()
+    def get(self):
+        return SearchService().getRealtimePopularContents()
 
 @SearchNamespace.route('/recommend/like', methods=['GET'])
 class RecommendLikeController(Resource):

@@ -25,9 +25,13 @@ class GenreContentController(Resource):
 @ContentNamespace.route('', methods=['GET'])
 class ContentDetailController(Resource):
     def get(self):
-        pass
+        request_json = request.get_json()
+        contentId = request_json['content_id']
+        return ContentService().getContentDetail(contentId)
 
 @ContentNamespace.route('/recommend', methods=['GET'])
 class RecommendContentController(Resource):
     def get(self):
-        pass
+        request_json = request.get_json()
+        contentId = request_json['content_id']
+        return ContentService().getRelatedContent(contentId)
