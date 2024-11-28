@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+from utils.DateFormat import DateFormat
 
 
 class LikedContentDTO:
@@ -8,21 +9,30 @@ class LikedContentDTO:
             videoId:int,
             name:str,
             image:str,
-            episode:int,
+            runtime:int,
             date:datetime,
     ):
         self.videoId = videoId
         self.name = name
         self.image = image
-        self.episode = episode
+        self.runtime = runtime
         self.date = date
 
-    def toJson(self) -> bytes:
-        obj = {
+    @staticmethod
+    def fromJson(jsonData:dict) -> 'LikedContentDTO':
+        return LikedContentDTO(
+            videoId=jsonData['video_id'],
+            name=jsonData['name'],
+            image=jsonData['image'],
+            runtime=jsonData['runtime'],
+            date=DateFormat.parse(jsonData['date'], DateFormat.all)
+        )
+
+    def toJson(self) -> dict:
+        return {
             "videoId": self.videoId,
             "name": self.name,
             "image": self.image,
-            "episode": self.episode,
-            "date": self.date.strftime("%Y-%m-%d")
+            "runtime": self.runtime,
+            "date": DateFormat.format(self.date)
         }
-        return json.dumps(obj, ensure_ascii=False).encode('utf-8')

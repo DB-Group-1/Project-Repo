@@ -9,7 +9,7 @@ class GenreService:
     def __init__(self):
         self.repo = GenreRepository()
 
-    def getGenresByCategory(self, category:str) -> Response:
-        result = self.repo.selectGenre(category)
+    def getGenresByCategory(self) -> Response:
+        result = self.repo.selectGenre()
         result = json.dumps(result, ensure_ascii=False).encode('utf-8')
         return Response(result, content_type='application/json; charset=utf-8')

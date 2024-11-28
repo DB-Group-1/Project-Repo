@@ -137,3 +137,24 @@ class ContentRepository:
             limit 20;"""
         result = self.db.execute(sql)
         return result.to_dict(orient='records')
+
+    def selectContentWatchingNow(self, userId:int, videoId:int):
+        sql = f"""
+            SELECT 
+                uw.video_id AS video_id,
+                cm.content_id AS content_id,
+                cm.content_name AS name,
+                cm.img_url AS image,
+                cm.limit_age AS limit_age,
+                cm.introduction AS description,
+                cv.quantity AS runtime,
+                cv.uploaded_date AS upload_date,
+                ifnull(ul.like_onoff, 0) AS user_like
+            FROM user_watched uw
+            LEFT JOIN ContentVideo cv ON uw.video_id = cv.video_id
+            LEFT JOIN Content_main cm ON cv.content_id = cm.content_id
+            LEFT JOIN user_like ul ON ul.content_id = cm.content_id
+            WHERE uw.user_id = {userId} AND uw.video_id = "{videoId}";"""
+        result = self.db.execute(sql)
+        result['upload_date'] = result['upload_date'].astype(str)
+        return result.to_dict(orient='records')
